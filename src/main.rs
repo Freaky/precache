@@ -18,11 +18,7 @@ fn main() -> Result<(), String> {
 
     builder.build_parallel().run(|| {
         Box::new(|entry| {
-            if let Ok(entry) = entry {
-                if let Ok(mut file) = File::open(entry.path()) {
-                    let _ = copy(&mut file, &mut sink());
-                }
-            }
+            let _ = entry.map(|e| File::open(e.path()).and_then(|mut f| copy(&mut f, &mut sink())));
             ignore::WalkState::Continue
         })
     });
