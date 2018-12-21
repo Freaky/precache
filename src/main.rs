@@ -1,6 +1,6 @@
+use ignore::WalkBuilder;
 use std::fs::File;
 use std::io::{copy, sink};
-use ignore::WalkBuilder;
 
 fn main() -> Result<(), String> {
     let mut builder = WalkBuilder::new(std::env::args_os().nth(1).ok_or_else(|| {
